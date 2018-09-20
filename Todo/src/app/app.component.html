@@ -1,62 +1,20 @@
 <section class="todoapp">
   <header class="header">
     <h1>TODOS</h1>
-    <input class="input-todo" placeholder="What needs to be done?" >
+    <input class="input-todo" placeholder="What needs to be done?" [(ngModel)]="newTodo.text" (keyup.enter)="addTodo()">
   </header>
   <section class="main">
     <ul class="todo-list">
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox">
-          <label>Todo1</label>
-          <button class="remove"></button>
-        </div>
-      </li>
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox">
-          <label>Todo2</label>
-          <button class="remove"></button>
-        </div>
-      </li>
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox">
-          <label>Todo2</label>
-          <button class="remove"></button>
-        </div>
-      </li>
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox">
-          <label>Todo2</label>
-          <button class="remove"></button>
-        </div>
+      <li *ngFor="let todo of todos" [class.completed]="todo.completed">
+          <div class="view">
+              <input class="toggle" type="checkbox" (click)="toggleCompleted(todo)" [checked]="todo.completed">
+              <label>{{todo.text}}</label>
+              <button class="remove" (click)="removeTodo(todo.id)"></button>
+          </div>
       </li>
     </ul>
   </section>
-  <footer class="footer">
-    <span>X items left</span>
+  <footer class="footer" *ngIf="todos.length">
+    <span>{{getNonCompletedToDo()}} items left</span>
   </footer>
 </section>
-
-<!-- <section class="todoapp">
-  <header class="header">
-    <h1>Todos</h1>
-    <input class="new-todo" placeholder="What needs to be done?" autofocus="" [(ngModel)]="newTodo.title" (keyup.enter)="addTodo()">
-  </header>
-  <section class="main" *ngIf="todos.length > 0">
-    <ul class="todo-list">
-      <li *ngFor="let todo of todos" [class.completed]="todo.complete">
-        <div class="view">
-          <input class="toggle" type="checkbox" (click)="toggleTodoComplete(todo)" [checked]="todo.complete">
-          <label>{{todo.title}}</label>
-          <button class="destroy" (click)="removeTodo(todo)"></button>
-        </div>
-      </li>
-    </ul>
-  </section>
-  <footer class="footer" *ngIf="todos.length > 0">
-    <span class="todo-count"><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
-  </footer>
-</section> -->
